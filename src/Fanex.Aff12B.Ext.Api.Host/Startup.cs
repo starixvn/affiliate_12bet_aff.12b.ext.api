@@ -1,6 +1,5 @@
 ﻿using Fanex.Aff12B.Ext.Api.Core.Middleware;
 using Fanex.Aff12B.Ext.Api.Core.Models;
-using Fanex.Data;
 using Fanex.Data.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +12,8 @@ using Fanex.Aff12B.Ext.Api.Core.Extensions;
 using Fanex.Aff12B.Ext.Api.Core.Attributes;
 using Sentry.AspNetCore;
 using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.BearerToken;
 
 namespace Fanex.Aff12B.Ext.Api.Host
 {
@@ -36,13 +37,12 @@ namespace Fanex.Aff12B.Ext.Api.Host
             services.AddSwaggerGen();
 
             services.Configure<SentryAspNetCoreOptions>(Configuration.GetSection("Sentry"));
-            services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
+            services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
             services.Configure<ApplicationOptions>(Configuration.GetSection(ApplicationOptionSettingKey));
 
             services.Configure<List<User>>(Configuration.GetSection("Users"));
 
-            ConfigFanexData();
-
+            services.AddFanexSql(Configuration);
             services.AddResponseCaching(options =>
             {
                 options.UseCaseSensitivePaths = true;
@@ -103,12 +103,6 @@ namespace Fanex.Aff12B.Ext.Api.Host
                     context => !context.Request.FromInternal(),
                     builder =>
                     {
-                        //Fix adding UseHttpsRedirection conditionally via UseWhen fails in ASP.NET Core 6. Fixed in v6.0.9
-                        if (builder.ServerFeatures is null)
-                        {
-                            builder.Properties["server.Features"] = app.ServerFeatures;
-                        }
-
                         builder.UseHttpsRedirection();
                     });
             }
@@ -133,17 +127,18 @@ namespace Fanex.Aff12B.Ext.Api.Host
 
         private void ConfigAuthentication(IServiceCollection services)
         {
-            var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
+            var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>() ?? new TokenManagement();
 
-            if(token != null)
-            {
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(x =>
                 {
+                    x.UseSecurityTokenValidators = true;
+                    x.IncludeErrorDetails = true;
                     x.RequireHttpsMetadata = false;
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ClockSkew = TimeSpan.Zero,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
                         TokenDecryptionKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
@@ -167,21 +162,6 @@ namespace Fanex.Aff12B.Ext.Api.Host
                         }
                     };
                 });
-            }    
-        }
-
-        private void ConfigFanexData()
-        {
-            var listConnectionName = Configuration.GetSection("ConnectionStrings").GetChildren().Select(_ => _.Key);
-            var connectionStrings = new Dictionary<string, ConnectionConfiguration>(listConnectionName
-                .Select(connectionName => new KeyValuePair<string, ConnectionConfiguration>(connectionName,
-                    new ConnectionConfiguration(connectionName, Configuration.GetConnectionString(connectionName)))
-                ));
-            DbSettingProviderManager
-              .StartNewSession()
-              .WithSqlServer(resourcePath: "~/App_Data/SpConfig/SpName.xml")
-              .Use(connectionStrings)
-              .Run();
         }
     }
 }

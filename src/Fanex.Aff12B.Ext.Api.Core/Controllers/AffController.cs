@@ -25,12 +25,40 @@ namespace Fanex.Aff12B.Ext.Api.Core.Controllers
         }
 
         [HttpGet]
+        [Route("api/AccountOverview")]
+        public IEnumerable<AccountOverview> GetAccountOverview([FromQuery] AccountOverviewParam param)
+        {
+            _logger.LogInformation("Ext 12B - Get Account Overview");
+
+            if (param.IsValid)
+            {
+                return _affService.GetAccountOverview(param);
+            }
+
+            return [];
+        }
+
+        [HttpGet]
         [Route("api/StatementHistory")]
         public IEnumerable<StatementHistory> GetStatementHistory([FromQuery] StatementHistoryParam param)
         {
-            _logger.LogInformation("Ext 12B - Get statement history");
+            _logger.LogInformation("Ext 12B - Get Statement History");
 
             return _affService.GetStatementHistory(param);
+        }
+
+        [HttpGet]
+        [Route("api/Commission")]
+        public IEnumerable<AffCommission> GetCommission([FromQuery] AffCommissionParam param)
+        {
+            _logger.LogInformation("Ext 12B - Get Commission");
+
+            if (param.IsValid)
+            {
+                _affService.GetAffCommission(param);
+            }
+
+            return [];
         }
     }
 }

@@ -3,6 +3,6 @@
   <Function Name="Affiliate_Information">
     <Setting Key="Aff_User_Overview_Detail_Sel" SpName="Aff_User_Overview_Detail_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
     <Setting Key="Aff_User_StatementHistory_Sel" SpName="Aff_User_StatementHistory_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
-    <Setting Key="Aff_User_CommSetting_Sel" SpName="Aff_User_CommSetting_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
+    <Setting Key="Aff_User_Rpt_Commission" SpName="Aff_User_Rpt_Commission" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
   </Function>
 </Functions>

@@ -43,10 +43,12 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
             var claim = new[]
             {
                 new Claim(ClaimTypes.Name, siteName),
+                //new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                //new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString()),
                 new Claim(CustomClaimType.IsShowIPVN, request.IsShowIpvn.ToString(), ClaimValueTypes.Boolean)
              };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenManagement.Secret));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenManagement.Secret));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
             var encryptCredenction = new EncryptingCredentials(key, JwtConstants.DirectKeyUseAlg,
                 SecurityAlgorithms.Aes256CbcHmacSha512);
             var handler = new JwtSecurityTokenHandler();
@@ -54,13 +56,13 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
             var jwtToken = handler.CreateJwtSecurityToken(_tokenManagement.Issuer,
                   _tokenManagement.Audience,
                   new ClaimsIdentity(claim),
-                  DateTimeOffset.Now.DateTime,
-                  DateTimeOffset.Now.AddMinutes(_tokenManagement.AccessExpiration).DateTime,
                   DateTimeOffset.UtcNow.DateTime,
+                  DateTimeOffset.UtcNow.AddMinutes(_tokenManagement.AccessExpiration).DateTime,
+                  null,
                   credentials,
                   encryptCredenction
                   );
-            token.AccessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            token.AccessToken = handler.WriteToken(jwtToken);
             token.TokenType = handler.TokenType.Name;
             return Tuple.Create<bool, Token>(true, token);
         }
