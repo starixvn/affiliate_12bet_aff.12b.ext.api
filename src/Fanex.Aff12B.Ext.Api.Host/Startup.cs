@@ -5,15 +5,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 using Fanex.Aff12B.Ext.Api.Core.Services;
 using Fanex.Aff12B.Ext.Api.Core.Extensions;
 using Fanex.Aff12B.Ext.Api.Core.Attributes;
 using Sentry.AspNetCore;
 using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.BearerToken;
+using Fanex.Aff12B.Ext.Api.Core.Utilities;
 
 namespace Fanex.Aff12B.Ext.Api.Host
 {
@@ -37,7 +34,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
             services.AddSwaggerGen();
 
             services.Configure<SentryAspNetCoreOptions>(Configuration.GetSection("Sentry"));
-            services.Configure<TokenManagement>(Configuration.GetSection("TokenManagement"));
+            services.Configure<TokenManagementOptions>(Configuration.GetSection("TokenManagement"));
             services.Configure<ApplicationOptions>(Configuration.GetSection(ApplicationOptionSettingKey));
 
             services.Configure<List<User>>(Configuration.GetSection("Users"));
@@ -127,29 +124,12 @@ namespace Fanex.Aff12B.Ext.Api.Host
 
         private void ConfigAuthentication(IServiceCollection services)
         {
-            var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>() ?? new TokenManagement();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(x =>
                 {
-                    x.UseSecurityTokenValidators = true;
-                    x.IncludeErrorDetails = true;
                     x.RequireHttpsMetadata = false;
                     x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ClockSkew = TimeSpan.Zero,
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
-                        TokenDecryptionKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(token.Secret)),
-                        ValidIssuer = token.Issuer,
-                        ValidAudience = token.Audience,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        RoleClaimType = ClaimsIdentity.DefaultNameClaimType,
-                        RequireExpirationTime = true,
-                        ValidateLifetime = true
-                    };
+                    x.TokenValidationParameters = TokenUtils.GetTokenValidationParameters(Configuration);
                     x.Events = new JwtBearerEvents
                     {
                         OnAuthenticationFailed = context =>
@@ -159,7 +139,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
                                 context.Response.Headers.Append("Token-Expired", "true");
                             }
                             return Task.CompletedTask;
-                        }
+                        }                        
                     };
                 });
         }

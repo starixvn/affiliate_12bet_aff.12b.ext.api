@@ -9,7 +9,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Services
     {
         private readonly IAuthenticateService _authenticateService;
         private readonly IUserManagementService _mockUserManagement;
-        private readonly TokenManagement _tokenManagement = new TokenManagement
+        private readonly TokenManagementOptions _tokenManagement = new TokenManagementOptions
         {
             AccessExpiration = 30,
             Audience = "test",
@@ -21,7 +21,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Services
         public TokenAuthenticationServiceTest()
         {
             _mockUserManagement = Substitute.For<IUserManagementService>();
-            var mockTokenManagement = Substitute.For<IOptions<TokenManagement>>();
+            var mockTokenManagement = Substitute.For<IOptions<TokenManagementOptions>>();
             mockTokenManagement.Value.Returns(_tokenManagement);
 
             _authenticateService = new TokenAuthenticationService(

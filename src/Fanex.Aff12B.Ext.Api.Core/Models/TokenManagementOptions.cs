@@ -2,7 +2,7 @@
 
 namespace Fanex.Aff12B.Ext.Api.Core.Models
 {
-    public class TokenManagement
+    public class TokenManagementOptions
     {
         public string Secret { get; set; } = string.Empty;
 
