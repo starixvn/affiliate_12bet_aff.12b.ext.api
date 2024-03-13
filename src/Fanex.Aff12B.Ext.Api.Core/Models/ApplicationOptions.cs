@@ -1,4 +1,4 @@
-﻿namespace Fanex.Aff12B.Ext.Api.Core.Models.DTO
+﻿namespace Fanex.Aff12B.Ext.Api.Core.Models
 {
     public class ApplicationOptions
     {

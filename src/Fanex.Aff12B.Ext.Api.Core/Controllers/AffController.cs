@@ -55,7 +55,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Controllers
 
             if (param.IsValid)
             {
-                _affService.GetAffCommission(param);
+                return _affService.GetAffCommission(param);
             }
 
             return [];

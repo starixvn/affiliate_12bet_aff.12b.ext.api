@@ -1,5 +1,7 @@
 ﻿using Fanex.Aff12B.Ext.Api.Core.Constant;
 using Fanex.Aff12B.Ext.Api.Core.Models;
+using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
+using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +21,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
             _tokenManagement = tokenManagementAccessor.Value;
         }
 
-        public Tuple<bool, Token> IsAuthenticated(TokenRequest request)
+        public Tuple<bool, Token> IsAuthenticated(TokenRequestParam request)
         {
             var token = new Token
             {
@@ -40,11 +42,13 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
                 return Tuple.Create(false, token);
             }
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, siteName),
-                new Claim(CustomClaimType.IsShowIPVN, request.IsShowIpvn.ToString(), ClaimValueTypes.Boolean)
+                new (ClaimTypes.Name, realUserName),
+                new (CustomClaimType.Site, siteName),
+                new (CustomClaimType.IsShowIPVN, request.IsShowIpvn.ToString(), ClaimValueTypes.Boolean)
              };
+
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenManagement.Secret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var encryptCredenction = new EncryptingCredentials(key, JwtConstants.DirectKeyUseAlg,

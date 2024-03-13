@@ -9,7 +9,6 @@ using Fanex.Aff12B.Ext.Api.Core.Services;
 using Fanex.Aff12B.Ext.Api.Core.Extensions;
 using Fanex.Aff12B.Ext.Api.Core.Attributes;
 using Sentry.AspNetCore;
-using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
 using Fanex.Aff12B.Ext.Api.Core.Utilities;
 
 namespace Fanex.Aff12B.Ext.Api.Host
@@ -108,6 +107,8 @@ namespace Fanex.Aff12B.Ext.Api.Host
             app.UseUnderMaintenance();
             app.UseStatusCodePagesWithReExecute("/Error", "?code={0}");
             app.UseJWTokenOnPage();
+
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseResponseCaching();
         }

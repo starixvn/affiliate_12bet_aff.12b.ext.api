@@ -1,6 +1,6 @@
 using System.Net;
 using Fanex.Aff12B.Ext.Api.Core.Attributes;
-using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
+using Fanex.Aff12B.Ext.Api.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Fanex.Aff12B.Ext.Api.Core.Models
+namespace Fanex.Aff12B.Ext.Api.Core.Models.DTO
 {
     public class Token
     {

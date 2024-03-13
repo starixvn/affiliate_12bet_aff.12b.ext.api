@@ -1,4 +1,5 @@
 using Fanex.Aff12B.Ext.Api.Core.Models;
+using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
 using Fanex.Aff12B.Ext.Api.Core.Services;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -35,7 +36,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Services
         public void IsAuthenticated_InValidUser_ReturnFalse(string userName, string pass)
         {
             //Arrange
-            var token = new TokenRequest
+            var token = new TokenRequestParam
             {
                 Username = userName,
                 Password = pass
@@ -55,7 +56,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Services
         public void IsAuthenticated_ValidUser_ReturnTrueAndNotNullToken(string userName, string pass)
         {
             //Arrange
-            var token = new TokenRequest
+            var token = new TokenRequestParam
             {
                 Username = userName,
                 Password = pass

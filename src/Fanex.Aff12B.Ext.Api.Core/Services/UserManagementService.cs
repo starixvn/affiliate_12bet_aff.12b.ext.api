@@ -1,5 +1,5 @@
 ﻿using Fanex.Aff12B.Ext.Api.Core.Extensions;
-using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
+using Fanex.Aff12B.Ext.Api.Core.Models;
 using Microsoft.Extensions.Options;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Services

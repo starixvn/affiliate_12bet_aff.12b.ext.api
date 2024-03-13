@@ -1,5 +1,5 @@
 ﻿using Fanex.Aff12B.Ext.Api.Core.Attributes;
-using Fanex.Aff12B.Ext.Api.Core.Models;
+using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
 using Fanex.Aff12B.Ext.Api.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Controllers
         [AllowAnonymous]
         [Route("api/Auth")]
         [HttpPost]
-        public ActionResult RequestToken([FromBody] TokenRequest request)
+        public ActionResult RequestToken([FromBody] TokenRequestParam request)
         {
             if (!ModelState.IsValid)
             {

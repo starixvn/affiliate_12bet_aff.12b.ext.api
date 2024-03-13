@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-
+﻿
 namespace Fanex.Aff12B.Ext.Api.Core.Models
 {
     public class TokenManagementOptions

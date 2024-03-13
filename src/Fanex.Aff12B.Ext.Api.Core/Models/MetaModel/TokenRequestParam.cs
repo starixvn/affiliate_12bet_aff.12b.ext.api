@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Fanex.Aff12B.Ext.Api.Core.Models
+namespace Fanex.Aff12B.Ext.Api.Core.Models.MetaModel
 {
-    public class TokenRequest
+    public class TokenRequestParam
     {
         const int MaxLengthOfUserName = 50;
         const int MaxLengthOfPassword = 16;

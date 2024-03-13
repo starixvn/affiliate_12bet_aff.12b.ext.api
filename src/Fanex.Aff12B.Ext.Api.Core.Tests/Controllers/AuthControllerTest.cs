@@ -1,6 +1,7 @@
 using System.Net;
 using Fanex.Aff12B.Ext.Api.Core.Controllers;
-using Fanex.Aff12B.Ext.Api.Core.Models;
+using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
+using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
 using Fanex.Aff12B.Ext.Api.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
@@ -24,7 +25,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Controllers
             controller.ModelState.AddModelError("Error1", "Invalid");
 
             //Action
-            var result = controller.RequestToken(new TokenRequest()) as ObjectResult;
+            var result = controller.RequestToken(new TokenRequestParam()) as ObjectResult;
 
             //Assert
             Assert.Equal("Invalid Request", result?.Value);
@@ -35,11 +36,11 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Controllers
         public void RequestToken_WhenCallWith_Unauthentication_ReturnCorrect()
         {
             //Arrange
-            _authenticateService.IsAuthenticated(Arg.Any<TokenRequest>()).Returns(Tuple.Create<bool, Token>(false, new Token()));
+            _authenticateService.IsAuthenticated(Arg.Any<TokenRequestParam>()).Returns(Tuple.Create<bool, Token>(false, new Token()));
             var controller = new AuthController(_authenticateService);
 
             //Action
-            var result = controller.RequestToken(new TokenRequest()) as ObjectResult;
+            var result = controller.RequestToken(new TokenRequestParam()) as ObjectResult;
 
             //Assert
             Assert.Equal("Wrong username or password", result?.Value);
@@ -50,11 +51,11 @@ namespace Fanex.Aff12B.Ext.Api.Core.Tests.Controllers
         public void RequestToken_WhenCallWith_Authenticated_ReturnCorrect()
         {
             //Arrange
-            _authenticateService.IsAuthenticated(Arg.Any<TokenRequest>()).Returns(Tuple.Create<bool, Token>(true, new Token()));
+            _authenticateService.IsAuthenticated(Arg.Any<TokenRequestParam>()).Returns(Tuple.Create<bool, Token>(true, new Token()));
             var controller = new AuthController(_authenticateService);
 
             //Action
-            var result = controller.RequestToken(new TokenRequest()) as ObjectResult;
+            var result = controller.RequestToken(new TokenRequestParam()) as ObjectResult;
 
             //Assert
             Assert.NotNull(result?.Value as Token);
