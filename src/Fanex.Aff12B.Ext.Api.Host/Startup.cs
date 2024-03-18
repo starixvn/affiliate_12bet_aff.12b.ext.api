@@ -1,15 +1,16 @@
-﻿using Fanex.Aff12B.Ext.Api.Core.Middleware;
+﻿using Fanex.Aff12B.Ext.Api.Core.Attributes;
+using Fanex.Aff12B.Ext.Api.Core.Extensions;
+using Fanex.Aff12B.Ext.Api.Core.Middleware;
 using Fanex.Aff12B.Ext.Api.Core.Models;
+using Fanex.Aff12B.Ext.Api.Core.Services;
+using Fanex.Aff12B.Ext.Api.Core.Utilities;
 using Fanex.Data.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
-using Fanex.Aff12B.Ext.Api.Core.Services;
-using Fanex.Aff12B.Ext.Api.Core.Extensions;
-using Fanex.Aff12B.Ext.Api.Core.Attributes;
+using Microsoft.OpenApi.Models;
 using Sentry.AspNetCore;
-using Fanex.Aff12B.Ext.Api.Core.Utilities;
 
 namespace Fanex.Aff12B.Ext.Api.Host
 {
@@ -30,7 +31,32 @@ namespace Fanex.Aff12B.Ext.Api.Host
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aff12B.Ext.Api", Version = "v1" });
+            });
 
             services.Configure<SentryAspNetCoreOptions>(Configuration.GetSection("Sentry"));
             services.Configure<TokenManagementOptions>(Configuration.GetSection("TokenManagement"));
