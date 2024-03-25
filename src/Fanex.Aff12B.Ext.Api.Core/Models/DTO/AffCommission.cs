@@ -28,7 +28,5 @@ namespace Fanex.Aff12B.Ext.Api.Core.Models.DTO
         public int CalculatedType { get; set; }
 
         public decimal FdmCommission { get; set; }
-
-        public decimal TotalCommission => Commission + FdmCommission;
     }
 }

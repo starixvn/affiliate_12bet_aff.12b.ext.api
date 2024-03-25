@@ -4,6 +4,7 @@ using Fanex.Aff12B.Ext.Api.Core.Middleware;
 using Fanex.Aff12B.Ext.Api.Core.Models;
 using Fanex.Aff12B.Ext.Api.Core.Services;
 using Fanex.Aff12B.Ext.Api.Core.Utilities;
+using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -29,8 +30,8 @@ namespace Fanex.Aff12B.Ext.Api.Host
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -118,7 +119,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
 
             app.UseWhoAmICheck();
             if (!env.IsDevelopment())
-            {    
+            {
                 app.UseHsts();
 
                 app.UseWhen(
@@ -141,10 +142,13 @@ namespace Fanex.Aff12B.Ext.Api.Host
 
         private void DIRegister(IServiceCollection services)
         {
+            services.AddScoped<IDynamicRepository, DynamicRepository>();
+
             services.AddScoped<IAffService, AffService>();
             services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<IPFilterAttribute>();
+            services.AddScoped<AffFilterAttribute>();
 
             services.AddUnderMaintenance(Configuration);
         }
@@ -166,7 +170,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
                                 context.Response.Headers.Append("Token-Expired", "true");
                             }
                             return Task.CompletedTask;
-                        }                        
+                        }
                     };
                 });
         }

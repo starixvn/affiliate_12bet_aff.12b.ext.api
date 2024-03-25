@@ -1,64 +1,34 @@
-﻿using Fanex.Aff12B.Ext.Api.Core.Attributes;
-using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
-using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
-using Fanex.Aff12B.Ext.Api.Core.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-namespace Fanex.Aff12B.Ext.Api.Core.Controllers
+﻿namespace Fanex.Aff12B.Ext.Api.Core.Controllers
 {
-    [Authorize]
+    using System.ComponentModel.DataAnnotations;
+    using Attributes;
+    using Microsoft.AspNetCore.Mvc;
+    using Services;
+
+    [Route("api/[controller]/[action]")]
     [ApiController]
     [ServiceFilter(typeof(IPFilterAttribute))]
-    public class AffController : ControllerBase
+    [ServiceFilter(typeof(AffFilterAttribute))]
+    public class AffController(IAffService affService) : ControllerBase
     {
-        private readonly ILogger<AffController> _logger;
-        private readonly IAffService _affService;
-
-        public AffController(
-            ILogger<AffController> logger,
-            IAffService affService)
-        {
-            _logger = logger;
-            _affService = affService;
-        }
+        [HttpGet]
+        public async Task<IActionResult> AccountOverview([Required] int affId)
+            => Ok(await affService.GetAccountOverviewForCurrentMonth(affId));
 
         [HttpGet]
-        [Route("api/AccountOverview")]
-        public IEnumerable<AccountOverview> GetAccountOverview([FromQuery] AccountOverviewParam param)
-        {
-            _logger.LogInformation("Ext 12B - Get Account Overview");
-
-            if (param.IsValid)
-            {
-                return _affService.GetAccountOverview(param);
-            }
-
-            return [];
-        }
+        public async Task<IActionResult> NetWinLoss([Required] int affId)
+            => Ok(await affService.GetNetWinLossForCurrentMonth(affId));
 
         [HttpGet]
-        [Route("api/StatementHistory")]
-        public IEnumerable<StatementHistory> GetStatementHistory([FromQuery] StatementHistoryParam param)
-        {
-            _logger.LogInformation("Ext 12B - Get Statement History");
-
-            return _affService.GetStatementHistory(param);
-        }
+        public async Task<IActionResult> StatementHistory([Required] int affId)
+            => Ok(await affService.GetStatementHistoryForCurrentMonth(affId));
 
         [HttpGet]
-        [Route("api/Commission")]
-        public IEnumerable<AffCommission> GetCommission([FromQuery] AffCommissionParam param)
-        {
-            _logger.LogInformation("Ext 12B - Get Commission");
+        public async Task<IActionResult> ReferrersStatistics([Required] int affId)
+            => Ok(await affService.GetReferrerStatisticsForCurrentMonth(affId));
 
-            if (param.IsValid)
-            {
-                return _affService.GetAffCommission(param);
-            }
-
-            return [];
-        }
+        [HttpGet]
+        public async Task<IActionResult> LandingPageStatistics([Required] int affId)
+            => Ok(await affService.GetLandingPageStatisticsForCurrentMonth(affId));
     }
 }

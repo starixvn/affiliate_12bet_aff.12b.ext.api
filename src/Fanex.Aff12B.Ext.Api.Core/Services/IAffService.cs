@@ -1,14 +1,17 @@
-﻿using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
-using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
-
-namespace Fanex.Aff12B.Ext.Api.Core.Services
+﻿namespace Fanex.Aff12B.Ext.Api.Core.Services
 {
+    using Models.DTO.Statistics;
+
     public interface IAffService
     {
-        public IEnumerable<AccountOverview> GetAccountOverview(AccountOverviewParam param);
+        Task<object> GetAccountOverviewForCurrentMonth(int affId);
+        
+        Task<decimal> GetStatementHistoryForCurrentMonth(int affId);
 
-        public IEnumerable<StatementHistory> GetStatementHistory(StatementHistoryParam param);
+        Task<decimal> GetNetWinLossForCurrentMonth(int affId);
 
-        public IEnumerable<AffCommission> GetAffCommission(AffCommissionParam param);
+        Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonth(int affId);
+
+        Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonth(int affId);
     }
 }

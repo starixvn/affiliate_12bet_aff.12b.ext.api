@@ -1,12 +1,13 @@
-﻿using Fanex.Aff12B.Ext.Api.Core.Constant;
+﻿using System.Security.Claims;
+using System.Text;
+using Fanex.Aff12B.Ext.Api.Core.Constant;
+using Fanex.Aff12B.Ext.Api.Core.Helper;
 using Fanex.Aff12B.Ext.Api.Core.Models;
 using Fanex.Aff12B.Ext.Api.Core.Models.DTO;
 using Fanex.Aff12B.Ext.Api.Core.Models.MetaModel;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Services
 {
@@ -14,6 +15,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
     {
         private readonly IUserManagementService _userManagementService;
         private readonly TokenManagementOptions _tokenManagement;
+
         public TokenAuthenticationService(IUserManagementService service,
             IOptions<TokenManagementOptions> tokenManagementAccessor)
         {
@@ -51,7 +53,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
 
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenManagement.Secret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var encryptCredenction = new EncryptingCredentials(key, JwtConstants.DirectKeyUseAlg,
+            var encryptCredentials = new EncryptingCredentials(key, JwtConstants.DirectKeyUseAlg,
                 SecurityAlgorithms.Aes256CbcHmacSha512);
             var handler = new JsonWebTokenHandler();
 
@@ -60,11 +62,11 @@ namespace Fanex.Aff12B.Ext.Api.Core.Services
                 Issuer = _tokenManagement.Issuer,
                 Audience = _tokenManagement.Audience,
                 Subject = new ClaimsIdentity(claims),
-                IssuedAt = DateTime.UtcNow,
-                NotBefore = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(_tokenManagement.AccessExpiration),
+                IssuedAt = DateTimeHelper.UtcNow,
+                NotBefore = DateTimeHelper.UtcNow,
+                Expires = DateTimeHelper.UtcNow.AddMinutes(_tokenManagement.AccessExpiration),
                 SigningCredentials = credentials,
-                EncryptingCredentials = encryptCredenction
+                EncryptingCredentials = encryptCredentials
             };
 
             token.AccessToken = handler.CreateToken(tokenDescriptor);
