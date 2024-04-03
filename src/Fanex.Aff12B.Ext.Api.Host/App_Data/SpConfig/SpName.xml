@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="32" SiteName="12B_Api">
   <Function Name="Affiliate_Information">
-    <Setting Key="Aff_User_Overview_Detail_Sel" SpName="Aff_User_Overview_Detail_Sel" DbName="DBAFF.Affiliate_12Bet.wsv_affv" />
-    <Setting Key="Aff_User_StatementHistory_Sel" SpName="Aff_User_StatementHistory_Sel" DbName="DBAFF.Affiliate_12Bet.wsv_affv" />
-    <Setting Key="Aff_User_Rpt_Commission" SpName="Aff_User_Rpt_Commission" DbName="DBAFF.Affiliate_12Bet.wsv_affv" />
-    <Setting Key="Aff_Country_Sel" SpName="Aff_Country_Sel" DbName="DBAFF.Affiliate_12bet.wsv_affv" />
-    <Setting Key="Aff_ClickStatisticsSelBySite" SpName="Aff_ClickStatisticsSelBySite" DbName="DBAFF.Affiliate_12bet.wsv_affv" />
-    <Setting Key="Aff_ClickStatisticsSelByPage" SpName="Aff_ClickStatisticsSelByPage" DbName="DBAFF.Affiliate_12bet.wsv_affv" />
+    <Setting Key="Aff_User_Overview_Detail_Sel" SpName="Aff_User_Overview_Detail_Sel" DbName="DBAFF.Affiliate_12Bet.wsv_afinet" />
+    <Setting Key="Aff_User_StatementHistory_Sel" SpName="Aff_User_StatementHistory_Sel" DbName="DBAFF.Affiliate_12Bet.wsv_afinetv" />
+    <Setting Key="Aff_User_Rpt_Commission" SpName="Aff_User_Rpt_Commission" DbName="DBAFF.Affiliate_12Bet.wsv_afinet" />
+    <Setting Key="Aff_Country_Sel" SpName="Aff_Country_Sel" DbName="DBAFF.Affiliate_12bet.wsv_afinetv" />
+    <Setting Key="Aff_ClickStatisticsSelBySite" SpName="Aff_ClickStatisticsSelBySite" DbName="DBAFF.Affiliate_12bet.wsv_afinetv" />
+    <Setting Key="Aff_ClickStatisticsSelByPage" SpName="Aff_ClickStatisticsSelByPage" DbName="DBAFF.Affiliate_12bet.wsv_afinetv" />
   </Function>
 </Functions>
