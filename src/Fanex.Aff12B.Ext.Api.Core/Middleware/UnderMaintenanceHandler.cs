@@ -6,7 +6,7 @@ using System.Net;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 {
-    public class UnderMaintenanceHandler
+    public class UnderMaintenanceHandler(RequestDelegate next, IMaintenanceService maintenanceService)
     {
         private const string AjaxRequestMsgFormat = "System is currently unavailable due to scheduled maintenance. This downtime will last from {0} to {1} (HK Time GMT +8)";
 
@@ -16,27 +16,18 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
         private const string RequestedWithHeader = "X-Requested-With";
         private const string XmlHttpRequest = "XMLHttpRequest";
 
-        private readonly RequestDelegate _next;
-        private readonly IMaintenanceService _maintenanceService;
-
-        public UnderMaintenanceHandler(RequestDelegate next, IMaintenanceService maintenanceService)
-        {
-            _next = next;
-            _maintenanceService = maintenanceService;
-        }
-
         private static bool IsAjaxRequest(HttpRequest request)
             => request.Headers.TryGetValue(RequestedWithHeader, out StringValues headerValue)
                && string.Equals(headerValue.FirstOrDefault(), XmlHttpRequest, StringComparison.OrdinalIgnoreCase);
 
         public async Task Invoke(HttpContext context)
         {
-            var isUM = await _maintenanceService.IsUnderMaintenanceAsync();
+            var isUM = await maintenanceService.IsUnderMaintenanceAsync();
             if (isUM)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
 
-                var umTime = await _maintenanceService.GetUnderMaintenanceTimeAsync();
+                var umTime = await maintenanceService.GetUnderMaintenanceTimeAsync();
                 string msg;
 
                 if (IsAjaxRequest(context.Request))
@@ -59,7 +50,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
             }
             else
             {
-                await _next.Invoke(context);
+                await next.Invoke(context);
             }
         }
     }

@@ -78,7 +78,7 @@
             // Assert
             Assert.IsType<BadRequestObjectResult>(actionExecutingContext.Result);
             var result = actionExecutingContext.Result as BadRequestObjectResult;
-            Assert.Equal("API access is not permitted!", result?.Value);
+            Assert.Equal("The Affiliate is invalid or unsupport!", result?.Value);
         }
 
         private static IConfigurationRoot FakeConfigurationRoot(Dictionary<string, string> dic)

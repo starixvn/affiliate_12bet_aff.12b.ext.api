@@ -15,16 +15,9 @@ using Sentry.AspNetCore;
 
 namespace Fanex.Aff12B.Ext.Api.Host
 {
-    public class Startup
+    public class Startup(IConfiguration configuration)
     {
         private const string ApplicationOptionSettingKey = "ApplicationOptions";
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -59,13 +52,13 @@ namespace Fanex.Aff12B.Ext.Api.Host
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Aff12B.Ext.Api", Version = "v1" });
             });
 
-            services.Configure<SentryAspNetCoreOptions>(Configuration.GetSection("Sentry"));
-            services.Configure<TokenManagementOptions>(Configuration.GetSection("TokenManagement"));
-            services.Configure<ApplicationOptions>(Configuration.GetSection(ApplicationOptionSettingKey));
+            services.Configure<SentryAspNetCoreOptions>(configuration.GetSection("Sentry"));
+            services.Configure<TokenManagementOptions>(configuration.GetSection("TokenManagement"));
+            services.Configure<ApplicationOptions>(configuration.GetSection(ApplicationOptionSettingKey));
 
-            services.Configure<List<User>>(Configuration.GetSection("Users"));
+            services.Configure<List<User>>(configuration.GetSection("Users"));
 
-            services.AddFanexSql(Configuration);
+            services.AddFanexSql(configuration);
             services.AddResponseCaching(options =>
             {
                 options.UseCaseSensitivePaths = true;
@@ -102,13 +95,13 @@ namespace Fanex.Aff12B.Ext.Api.Host
         {
             app.UsePingCheck();
             app.UseForwardedHeaders();
-            if (string.Equals(Configuration["UseSwagger"], "1"))
+            if (string.Equals(configuration["UseSwagger"], "1"))
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            if (string.Equals(Configuration["UseErrorHandler"], "1"))
+            if (string.Equals(configuration["UseErrorHandler"], "1"))
             {
                 app.UseErrorHandler();
             }
@@ -150,7 +143,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
             services.AddScoped<IPFilterAttribute>();
             services.AddScoped<AffFilterAttribute>();
 
-            services.AddUnderMaintenance(Configuration);
+            services.AddUnderMaintenance(configuration);
         }
 
         private void ConfigAuthentication(IServiceCollection services)
@@ -160,7 +153,7 @@ namespace Fanex.Aff12B.Ext.Api.Host
                 {
                     x.RequireHttpsMetadata = false;
                     x.SaveToken = true;
-                    x.TokenValidationParameters = TokenUtils.GetTokenValidationParameters(Configuration);
+                    x.TokenValidationParameters = TokenUtils.GetTokenValidationParameters(configuration);
                     x.Events = new JwtBearerEvents
                     {
                         OnAuthenticationFailed = context =>

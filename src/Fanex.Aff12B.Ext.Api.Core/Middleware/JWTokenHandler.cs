@@ -3,16 +3,11 @@ using Microsoft.Extensions.Primitives;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 {
-    public class JWTokenHandler
+    public class JWTokenHandler(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
         const string HeaderAuthKey = "Authorization";
         const string SuffixTokenValue = "Bearer ";
 
-        public JWTokenHandler(RequestDelegate next)
-        {
-            _next = next;
-        }
         public async Task Invoke(HttpContext context)
         {
             if (!context.Request.Headers.ContainsKey(HeaderAuthKey))
@@ -24,7 +19,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
                 }
             }
 
-            await _next.Invoke(context);
+            await next.Invoke(context);
         }
 
         private static string GetToken(HttpContext context)

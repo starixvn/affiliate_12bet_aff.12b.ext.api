@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Aff12B.Ext.Api.Core.Models.DTO
 {
-    [Serializable]
     public class StatementHistory
     {
         public DateTime MonthDate { get; set; }

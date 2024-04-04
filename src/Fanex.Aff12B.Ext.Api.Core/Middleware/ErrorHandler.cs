@@ -6,17 +6,10 @@ using Newtonsoft.Json;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 {
-    public class ErrorHandler
+    public class ErrorHandler(RequestDelegate next, ILogger<ErrorHandler> logger)
     {
         private const int ServerErrorCode = 500;
-        private readonly RequestDelegate _next;
-        private readonly ILogger<ErrorHandler> _logger;
 
-        public ErrorHandler(RequestDelegate next, ILogger<ErrorHandler> logger)
-        {
-            _next = next;
-            _logger = logger;
-        }
         public async Task Invoke(HttpContext context)
         {
             var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
@@ -28,7 +21,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 
             try
             {
-                await _next.Invoke(context);
+                await next.Invoke(context);
             }
             catch (Exception exception)
             {
@@ -40,7 +33,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
         {
             context.Response.StatusCode = ServerErrorCode;
             var errorMsg = ErrorMessageHelper.GenerateMessage(context, error);
-            _logger.LogCritical(error, errorMsg);
+            logger.LogCritical(error, errorMsg);
             await context.Response.WriteAsJsonAsync(JsonConvert.SerializeObject(new
             {
                 State = "Internal Server Error",

@@ -8,22 +8,13 @@ using System.Net.Sockets;
 
 namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 {
-    public class WhoAmIHealthCheck : IHealthCheck
+    public class WhoAmIHealthCheck(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env) : IHealthCheck
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IWebHostEnvironment _env;
-
-        public WhoAmIHealthCheck(IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _env = env;
-        }
-
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             IDictionary<string, object> result = new Dictionary<string, object>
             {
-                { "Env", _env.EnvironmentName }
+                { "Env", env.EnvironmentName }
             };
             await AddServerIPInfo(result);
             AddExtraServerInfo(result);
@@ -48,7 +39,7 @@ namespace Fanex.Aff12B.Ext.Api.Core.Middleware
 
         private void AddExtraServerInfo(IDictionary<string, object> result)
         {
-            var context = _httpContextAccessor.HttpContext;
+            var context = httpContextAccessor.HttpContext;
             result.Add("Local Ip", context.Connection.LocalIpAddress.ToString());
             result.Add("Local Port", context.Connection.LocalPort);
             result.Add("Client Ip", context.Connection.RemoteIpAddress.ToString());
