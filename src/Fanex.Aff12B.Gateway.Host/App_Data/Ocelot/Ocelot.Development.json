@@ -1,0 +1,84 @@
+{
+  "Routes": [
+    //Identity API
+    {
+      "UpstreamPathTemplate": "/IdentityStatus",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bAuth.nexdev.net",
+          "Port": 443
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/IdentityWhoAmI",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/WhoAmI",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bAuth.nexdev.net",
+          "Port": 443
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/Api/Auth",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/Api/Auth",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bAuth.nexdev.net",
+          "Port": 443
+        }
+      ]
+    },
+
+    //Internal 12B API
+    {
+      "UpstreamPathTemplate": "/12bApiStatus",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bapi.nexdev.net",
+          "Port": 443
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/12bApiWhoami",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/whoami",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bapi.nexdev.net",
+          "Port": 443
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "int12bapi.nexdev.net",
+          "Port": 443
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+  }
+}
