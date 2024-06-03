@@ -50,7 +50,7 @@ namespace Fanex.Aff12B.Common.Core.Extensions
             services.Configure<SentryAspNetCoreOptions>(configuration.GetSection(SettingKeys.Sentry));
             services.Configure<TokenManagementOptions>(configuration.GetSection(SettingKeys.TokenManagement));
 
-            if(shouldConfigJwt)
+            if (shouldConfigJwt)
             {
                 services.AddResponseCaching(options =>
                 {
@@ -88,7 +88,11 @@ namespace Fanex.Aff12B.Common.Core.Extensions
         public static void Configure(this IApplicationBuilder app, IConfiguration configuration)
         {
             app.UsePingCheck();
-            app.UseForwardedHeaders();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (string.Equals(configuration["UseSwagger"], "1"))
             {
                 app.UseSwagger();
@@ -98,13 +102,15 @@ namespace Fanex.Aff12B.Common.Core.Extensions
             if (string.Equals(configuration["UseErrorHandler"], "1"))
             {
                 app.UseErrorHandler();
+
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
             else
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
             app.UseWhoAmICheck();
             app.UseUnderMaintenance();
         }
