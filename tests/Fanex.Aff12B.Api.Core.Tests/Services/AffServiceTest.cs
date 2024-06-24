@@ -32,7 +32,7 @@
         }
 
         [Fact]
-        public async Task GetAccountOverviewForCurrentMonth_WhenCalled_ReturnCorrectData()
+        public async Task GetAccountOverviewForCurrentMonthAsync_WhenCalled_ReturnCorrectData()
         {
             // Arrange
             const int affId = 123;
@@ -45,7 +45,7 @@
             _repository.FetchAsync<AccountOverview>(Arg.Any<AccountOverviewCriteria>()).Returns(accountOverviews);
 
             // Action
-            var result = await _affService.GetAccountOverviewForCurrentMonth(affId);
+            var result = await _affService.GetAccountOverviewForCurrentMonthAsync(affId);
 
             // Assert
             Assert.NotNull(result);
@@ -55,7 +55,7 @@
         }
 
         [Fact]
-        public async Task GetStatementHistoryForCurrentMonth_WhenCalled_ShouldReturnTotalAmountForCurrentMonth()
+        public async Task GetStatementHistoryForCurrentMonthAsync_WhenCalled_ShouldReturnTotalAmountForCurrentMonth()
         {
             // Arrange
             const int affId = 123;
@@ -69,27 +69,27 @@
             _repository.FetchAsync<StatementHistory>(Arg.Any<StatementHistoryCriteria>()).Returns(statementHistories);
 
             // Action
-            var totalAmount = await _affService.GetStatementHistoryForCurrentMonth(affId);
+            var totalAmount = await _affService.GetStatementHistoryForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Equal(400, totalAmount);
         }
 
         [Fact]
-        public async Task GetStatementHistoryForCurrentMonth_WhenCalledWithIncorrectParam_ShouldReturnZero()
+        public async Task GetStatementHistoryForCurrentMonthAsync_WhenCalledWithIncorrectParam_ShouldReturnZero()
         {
             // Arrange
             const int affId = 0;
 
             // Action
-            var totalAmount = await _affService.GetStatementHistoryForCurrentMonth(affId);
+            var totalAmount = await _affService.GetStatementHistoryForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Equal(0, totalAmount);
         }
 
         [Fact]
-        public async Task GetNetWinLossForCurrentMonth_WhenCalled_ShouldReturnCorrectNetWinLossForCurrentMonth()
+        public async Task GetNetWinLossForCurrentMonthAsync_WhenCalled_ShouldReturnCorrectNetWinLossForCurrentMonth()
         {
             // Arrange
             const int affId = 123;
@@ -102,27 +102,27 @@
             _repository.FetchAsync<AffCommission>(Arg.Any<AffCommissionCriteria>()).Returns(reports);
 
             // Action
-            var netWinLoss = await _affService.GetNetWinLossForCurrentMonth(affId);
+            var netWinLoss = await _affService.GetNetWinLossForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Equal(500, netWinLoss);
         }
 
         [Fact]
-        public async Task GetNetWinLossForCurrentMonth_WhenCalledIncorrectParams_ShouldReturnZero()
+        public async Task GetNetWinLossForCurrentMonthAsync_WhenCalledIncorrectParams_ShouldReturnZero()
         {
             // Arrange
             const int affId = 0;
 
             // Action
-            var netWinLoss = await _affService.GetNetWinLossForCurrentMonth(affId);
+            var netWinLoss = await _affService.GetNetWinLossForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Equal(0, netWinLoss);
         }
 
         [Fact]
-        public async Task GetReferrerStatisticsForCurrentMonth_WhenCalled_ShouldReturnReferrerStatisticsForCurrentMonth()
+        public async Task GetReferrerStatisticsForCurrentMonthAsync_WhenCalled_ShouldReturnReferrerStatisticsForCurrentMonth()
         {
             // Arrange
             const int affId = 123;
@@ -136,27 +136,27 @@
             _repository.FetchAsync<ReferrerStatistics>(Arg.Any<ReferrerStatisticsCriteria>()).Returns(referrerStatistics);
 
             // Action
-            var result = await _affService.GetReferrerStatisticsForCurrentMonth(affId);
+            var result = await _affService.GetReferrerStatisticsForCurrentMonthAsync(affId);
 
             // Assert
             Assert.NotNull(result);
         }
 
         [Fact]
-        public async Task GetReferrerStatisticsForCurrentMonth_WhenCalledWithIncorrectParams_ShouldReturnEmpty()
+        public async Task GetReferrerStatisticsForCurrentMonthAsync_WhenCalledWithIncorrectParams_ShouldReturnEmpty()
         {
             // Arrange
             const int affId = 0;
 
             // Action
-            var result = await _affService.GetReferrerStatisticsForCurrentMonth(affId);
+            var result = await _affService.GetReferrerStatisticsForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Empty(result);
         }
 
         [Fact]
-        public async Task GetLandingPageStatisticsForCurrentMonth_WhenCalled_ShouldReturnLandingPageStatisticsForCurrentMonth()
+        public async Task GetLandingPageStatisticsForCurrentMonthAsync_WhenCalled_ShouldReturnLandingPageStatisticsForCurrentMonth()
         {
             // Arrange
             const int affId = 123;
@@ -170,20 +170,20 @@
             _repository.FetchAsync<LandingPageStatistics>(Arg.Any<LandingPageStatisticsCriteria>()).Returns(landingPageStatistics);
 
             // Action
-            var result = await _affService.GetLandingPageStatisticsForCurrentMonth(affId);
+            var result = await _affService.GetLandingPageStatisticsForCurrentMonthAsync(affId);
 
             // Assert
             Assert.NotNull(result);
         }
 
         [Fact]
-        public async Task GetLandingPageStatisticsForCurrentMonth_WhenCalledWithIncorrectParams_ShouldReturnEmpty()
+        public async Task GetLandingPageStatisticsForCurrentMonthAsync_WhenCalledWithIncorrectParams_ShouldReturnEmpty()
         {
             // Arrange
             const int affId = 0;
 
             // Action
-            var result = await _affService.GetLandingPageStatisticsForCurrentMonth(affId);
+            var result = await _affService.GetLandingPageStatisticsForCurrentMonthAsync(affId);
 
             // Assert
             Assert.Empty(result);

@@ -20,7 +20,7 @@
             _currentDate = DateTimeHelper.Today;
         }
 
-        public async Task<object> GetAccountOverviewForCurrentMonth(int affId)
+        public async Task<object> GetAccountOverviewForCurrentMonthAsync(int affId)
         {
             var accountOverviews = await _repository
                 .FetchAsync<AccountOverview>(new AccountOverviewCriteria(affId, _currentDate))
@@ -36,14 +36,15 @@
             return totalAccountOverview;
         }
 
-        public async Task<decimal> GetStatementHistoryForCurrentMonth(int affId)
+        public async Task<decimal> GetStatementHistoryForCurrentMonthAsync(int affId)
         {
             var statementHistories = await _repository
                 .FetchAsync<StatementHistory>(new StatementHistoryCriteria { AffId = affId })
                 .ConfigureAwait(false);
 
             var reportsForCurrentMonth = statementHistories
-                .Where(s => s.MonthDate.Month == _currentDate.Month && s.TransType is TransType.MonthlyEarning or TransType.NewFDM)
+                .Where(s => s.MonthDate.Month == _currentDate.Month && s.MonthDate.Year == _currentDate.Year
+                && s.TransType is TransType.MonthlyEarning or TransType.NewFDM)
                 .Select(s => s.Amount);
 
             var total = reportsForCurrentMonth.Any() ? reportsForCurrentMonth.Sum() : 0;
@@ -51,13 +52,14 @@
             return total;
         }
 
-        public async Task<decimal> GetNetWinLossForCurrentMonth(int affId)
+        public async Task<decimal> GetNetWinLossForCurrentMonthAsync(int affId)
         {
             var reports = await _repository
                 .FetchAsync<AffCommission>(new AffCommissionCriteria(affId, _currentDate))
                 .ConfigureAwait(false);
 
-            var totalReport = reports.FirstOrDefault(i => i.MonthDate.Month == _currentDate.Month && i.ProductId == 0);
+            var totalReport = reports.FirstOrDefault(i => i.MonthDate.Month == _currentDate.Month
+            && i.MonthDate.Year == _currentDate.Year && i.ProductId == 0);
 
             var netWinLoss = totalReport != null
                 ? totalReport.WinLoss - totalReport.PlatformFee - totalReport.OperationalFee - totalReport.BankingFee - totalReport.Bonus
@@ -66,19 +68,19 @@
             return netWinLoss;
         }
 
-        public async Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonth(int affId)
+        public async Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonthAsync(int affId)
         {
-            var criteria = await CreateStatisticsCriteria<ReferrerStatisticsCriteria>(affId);
+            var criteria = await CreateStatisticsCriteriaAsync<ReferrerStatisticsCriteria>(affId);
             return await _repository.FetchAsync<ReferrerStatistics>(criteria).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonth(int affId)
+        public async Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonthAsync(int affId)
         {
-            var criteria = await CreateStatisticsCriteria<LandingPageStatisticsCriteria>(affId);
+            var criteria = await CreateStatisticsCriteriaAsync<LandingPageStatisticsCriteria>(affId);
             return await _repository.FetchAsync<LandingPageStatistics>(criteria).ConfigureAwait(false);
         }
 
-        private async Task<string> GetCountryCodes()
+        private async Task<string> GetCountryCodesAsync()
         {
             var countries = await _repository
                 .FetchAsync<Country>(new CountryCriteria())
@@ -87,10 +89,10 @@
             return string.Join(",", countries.Select(c => c.CountryCode));
         }
 
-        private async Task<T> CreateStatisticsCriteria<T>(int affId) where T : new()
+        private async Task<T> CreateStatisticsCriteriaAsync<T>(int affId) where T : new()
         {
             var fromDate = DateTimeHelper.CreateDateTime(_currentDate.Year, _currentDate.Month, 1);
-            var countryCodes = await GetCountryCodes();
+            var countryCodes = await GetCountryCodesAsync();
 
             dynamic result = new T();
 

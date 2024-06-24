@@ -64,9 +64,9 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "UpstreamPathTemplate": "/api/aff/{action}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "DownstreamPathTemplate": "/api/aff/{action}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

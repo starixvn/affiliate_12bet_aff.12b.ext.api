@@ -19,16 +19,16 @@
         }
 
         [Fact]
-        public async Task AccountOverview_WhenCalled_ReturnsOkWithCorrectData()
+        public async Task AccountOverviewAsync_WhenCalled_ReturnsOkWithCorrectData()
         {
             // Arrange
             const int affId = 123;
             var expectedData = new { Signups = 10, DepositedMembers = 5, QualifiedActiveMembers = 3 };
 
-            _affService.GetAccountOverviewForCurrentMonth(Arg.Any<int>()).Returns(expectedData);
+            _affService.GetAccountOverviewForCurrentMonthAsync(Arg.Any<int>()).Returns(expectedData);
 
             // Action
-            var result = await _affController.AccountOverview(affId);
+            var result = await _affController.AccountOverviewAsync(affId);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -36,15 +36,15 @@
         }
 
         [Fact]
-        public async Task NetWinLoss_WhenCalled_ReturnsOkWithCorrectData()
+        public async Task NetWinLossAsync_WhenCalled_ReturnsOkWithCorrectData()
         {
             // Arrange
             const int affId = 123;
             const decimal expected = 100;
-            _affService.GetNetWinLossForCurrentMonth(Arg.Any<int>()).Returns(expected);
+            _affService.GetNetWinLossForCurrentMonthAsync(Arg.Any<int>()).Returns(expected);
 
             // Action
-            var result = await _affController.NetWinLoss(affId);
+            var result = await _affController.NetWinLossAsync(affId);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -54,15 +54,15 @@
         }
 
         [Fact]
-        public async Task StatementHistory_WhenCalled_ReturnsOkWithCorrectData()
+        public async Task StatementHistoryAsync_WhenCalled_ReturnsOkWithCorrectData()
         {
             // Arrange
             const int affId = 123;
             const decimal expected = 100;
-            _affService.GetStatementHistoryForCurrentMonth(Arg.Any<int>()).Returns(expected);
+            _affService.GetStatementHistoryForCurrentMonthAsync(Arg.Any<int>()).Returns(expected);
 
             // Action
-            var result = await _affController.StatementHistory(affId);
+            var result = await _affController.StatementHistoryAsync(affId);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -72,16 +72,16 @@
         }
 
         [Fact]
-        public async Task ReferrersStatistics_WhenCalled_ReturnsOkWithCorrectData()
+        public async Task ReferrersStatisticsAsync_WhenCalled_ReturnsOkWithCorrectData()
         {
             // Arrange
             const int affId = 123;
             var expected = new List<ReferrerStatistics>();
 
-            _affService.GetReferrerStatisticsForCurrentMonth(Arg.Any<int>()).Returns(expected);
+            _affService.GetReferrerStatisticsForCurrentMonthAsync(Arg.Any<int>()).Returns(expected);
 
             // Action
-            var result = await _affController.ReferrersStatistics(affId);
+            var result = await _affController.ReferrersStatisticsAsync(affId);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -91,16 +91,16 @@
         }
 
         [Fact]
-        public async Task LandingPageStatistics_WhenCalled_ReturnsOkWithCorrectData()
+        public async Task LandingPageStatisticsAsync_WhenCalled_ReturnsOkWithCorrectData()
         {
             // Arrange
             const int affId = 123;
             var expected = new List<LandingPageStatistics>();
 
-            _affService.GetLandingPageStatisticsForCurrentMonth(Arg.Any<int>()).Returns(expected);
+            _affService.GetLandingPageStatisticsForCurrentMonthAsync(Arg.Any<int>()).Returns(expected);
 
             // Action
-            var result = await _affController.LandingPageStatistics(affId);
+            var result = await _affController.LandingPageStatisticsAsync(affId);
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);

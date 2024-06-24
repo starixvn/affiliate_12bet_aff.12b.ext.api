@@ -8,8 +8,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bAuth.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7105
         }
       ]
     },
@@ -20,8 +20,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bAuth.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7105
         }
       ]
     },
@@ -32,8 +32,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bAuth.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7105
         }
       ]
     },
@@ -46,8 +46,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bapi.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7215
         }
       ]
     },
@@ -58,20 +58,20 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bapi.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7215
         }
       ]
     },
     {
-      "UpstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "UpstreamPathTemplate": "/api/aff/{action}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamPathTemplate": "/api/aff/{action}?affId={affId}",
+      "DownstreamPathTemplate": "/api/aff/{action}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "int12bapi.nexdev.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 7215
         }
       ],
       "AuthenticationOptions": {

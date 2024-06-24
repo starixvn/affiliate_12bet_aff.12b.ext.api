@@ -16,7 +16,10 @@ namespace Fanex.Aff12B.Common.Core.Extensions
     {
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration, string swaggerDocTitle, bool shouldConfigJwt = false)
         {
-            services.AddControllers();
+            services.AddControllers(opts =>
+            {
+                opts.SuppressAsyncSuffixInActionNames = true;
+            });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();

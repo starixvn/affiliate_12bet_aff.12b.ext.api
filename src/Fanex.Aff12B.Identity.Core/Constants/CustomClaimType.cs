@@ -9,5 +9,7 @@
         public const string Role = "Role";
 
         public const string Scopes = "Scopes";
+
+        public const string AccessedAffs = "AccessedAffs";
     }
 }

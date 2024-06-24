@@ -13,23 +13,23 @@
     public class AffController(IAffService affService) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> AccountOverview([Required] int affId)
-            => Ok(await affService.GetAccountOverviewForCurrentMonth(affId));
+        public async Task<IActionResult> AccountOverviewAsync([Required] int affId)
+            => Ok(await affService.GetAccountOverviewForCurrentMonthAsync(affId));
 
         [HttpGet]
-        public async Task<IActionResult> NetWinLoss([Required] int affId)
-            => Ok(await affService.GetNetWinLossForCurrentMonth(affId));
+        public async Task<IActionResult> NetWinLossAsync([Required] int affId)
+            => Ok(await affService.GetNetWinLossForCurrentMonthAsync(affId));
 
         [HttpGet]
-        public async Task<IActionResult> StatementHistory([Required] int affId)
-            => Ok(await affService.GetStatementHistoryForCurrentMonth(affId));
+        public async Task<IActionResult> StatementHistoryAsync([Required] int affId)
+            => Ok(await affService.GetStatementHistoryForCurrentMonthAsync(affId));
 
         [HttpGet]
-        public async Task<IActionResult> ReferrersStatistics([Required] int affId)
-            => Ok(await affService.GetReferrerStatisticsForCurrentMonth(affId));
+        public async Task<IActionResult> ReferrersStatisticsAsync([Required] int affId)
+            => Ok(await affService.GetReferrerStatisticsForCurrentMonthAsync(affId));
 
         [HttpGet]
-        public async Task<IActionResult> LandingPageStatistics([Required] int affId)
-            => Ok(await affService.GetLandingPageStatisticsForCurrentMonth(affId));
+        public async Task<IActionResult> LandingPageStatisticsAsync([Required] int affId)
+            => Ok(await affService.GetLandingPageStatisticsForCurrentMonthAsync(affId));
     }
 }

@@ -4,14 +4,14 @@
 
     public interface IAffService
     {
-        Task<object> GetAccountOverviewForCurrentMonth(int affId);
+        Task<object> GetAccountOverviewForCurrentMonthAsync(int affId);
 
-        Task<decimal> GetStatementHistoryForCurrentMonth(int affId);
+        Task<decimal> GetStatementHistoryForCurrentMonthAsync(int affId);
 
-        Task<decimal> GetNetWinLossForCurrentMonth(int affId);
+        Task<decimal> GetNetWinLossForCurrentMonthAsync(int affId);
 
-        Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonth(int affId);
+        Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonthAsync(int affId);
 
-        Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonth(int affId);
+        Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonthAsync(int affId);
     }
 }

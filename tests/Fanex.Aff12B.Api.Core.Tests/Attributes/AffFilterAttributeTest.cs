@@ -17,9 +17,9 @@
             // Arrange
             var myConfiguration = new Dictionary<string, string>
             {
-                {"AffAccessList:0", "1"},
-                {"AffAccessList:1", "2"},
-                {"AffAccessList:3", "3"},
+                {"SuppotedAffList:0", "1"},
+                {"SuppotedAffList:1", "2"},
+                {"SuppotedAffList:3", "3"},
             };
             var configuration = FakeConfigurationRoot(myConfiguration);
 
@@ -36,7 +36,7 @@
         }
 
         [Fact]
-        public void OnActionExecuting_WhenAffAccessListEmpty_ResultIsNull()
+        public void OnActionExecuting_WhenSuppotedAffListEmpty_ResultIsNull()
         {
             // Arrange
             var myConfiguration = new Dictionary<string, string>();
@@ -61,9 +61,9 @@
             // Arrange
             var myConfiguration = new Dictionary<string, string>
             {
-                {"AffAccessList:0", "1"},
-                {"AffAccessList:1", "2"},
-                {"AffAccessList:3", "3"},
+                {"SuppotedAffList:0", "1"},
+                {"SuppotedAffList:1", "2"},
+                {"SuppotedAffList:3", "3"},
             };
             var configuration = FakeConfigurationRoot(myConfiguration);
 

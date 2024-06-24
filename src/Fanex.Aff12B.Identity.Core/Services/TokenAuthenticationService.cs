@@ -50,6 +50,7 @@ namespace Fanex.Aff12B.Identity.Core.Services
                 new (CustomClaimType.Site, siteName),
                 new (CustomClaimType.Role, userInfo.Role),
                 new (CustomClaimType.Scopes, userInfo.Scopes),
+                new (CustomClaimType.AccessedAffs, userInfo.AccessedAffs),
                 new (CustomClaimType.IsShowIPVN, request.IsShowIpvn.ToString(), ClaimValueTypes.Boolean)
              };
 

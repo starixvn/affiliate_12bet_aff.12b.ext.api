@@ -3,6 +3,7 @@ using Fanex.Aff12B.Api.Core.Helpers;
 using Fanex.Aff12B.Api.Core.Services;
 using Fanex.Aff12B.Common.Core.Extensions;
 using Fanex.Aff12B.Common.Core.Helpers;
+using Fanex.Aff12B.Common.Core.Middlewares;
 using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 
@@ -24,6 +25,7 @@ namespace Fanex.Aff12B.Api.Host
         {
             app.Configure(configuration);
 
+            app.UseJWTokenOnPage();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseResponseCaching();

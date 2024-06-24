@@ -9,5 +9,7 @@
         public string Role { get; set; }
 
         public string Scopes { get; set; }
+
+        public string AccessedAffs { get; set; }
     }
 }
