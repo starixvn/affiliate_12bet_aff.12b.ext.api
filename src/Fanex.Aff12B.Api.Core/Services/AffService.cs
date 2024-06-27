@@ -9,20 +9,13 @@
     using System;
     using System.Collections.Generic;
 
-    public class AffService : IAffService
+    public class AffService(IDynamicRepository repository) : IAffService
     {
-        private readonly IDynamicRepository _repository;
-        private readonly DateTime _currentDate;
-
-        public AffService(IDynamicRepository repository)
-        {
-            _repository = repository;
-            _currentDate = DateTimeHelper.Today;
-        }
+        private readonly DateTime _currentDate = DateTimeHelper.Today;
 
         public async Task<object> GetAccountOverviewForCurrentMonthAsync(int affId)
         {
-            var accountOverviews = await _repository
+            var accountOverviews = await repository
                 .FetchAsync<AccountOverview>(new AccountOverviewCriteria(affId, _currentDate))
                 .ConfigureAwait(false);
 
@@ -38,7 +31,7 @@
 
         public async Task<decimal> GetStatementHistoryForCurrentMonthAsync(int affId)
         {
-            var statementHistories = await _repository
+            var statementHistories = await repository
                 .FetchAsync<StatementHistory>(new StatementHistoryCriteria { AffId = affId })
                 .ConfigureAwait(false);
 
@@ -54,7 +47,7 @@
 
         public async Task<decimal> GetNetWinLossForCurrentMonthAsync(int affId)
         {
-            var reports = await _repository
+            var reports = await repository
                 .FetchAsync<AffCommission>(new AffCommissionCriteria(affId, _currentDate))
                 .ConfigureAwait(false);
 
@@ -71,18 +64,18 @@
         public async Task<IEnumerable<ReferrerStatistics>> GetReferrerStatisticsForCurrentMonthAsync(int affId)
         {
             var criteria = await CreateStatisticsCriteriaAsync<ReferrerStatisticsCriteria>(affId);
-            return await _repository.FetchAsync<ReferrerStatistics>(criteria).ConfigureAwait(false);
+            return await repository.FetchAsync<ReferrerStatistics>(criteria).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<LandingPageStatistics>> GetLandingPageStatisticsForCurrentMonthAsync(int affId)
         {
             var criteria = await CreateStatisticsCriteriaAsync<LandingPageStatisticsCriteria>(affId);
-            return await _repository.FetchAsync<LandingPageStatistics>(criteria).ConfigureAwait(false);
+            return await repository.FetchAsync<LandingPageStatistics>(criteria).ConfigureAwait(false);
         }
 
         private async Task<string> GetCountryCodesAsync()
         {
-            var countries = await _repository
+            var countries = await repository
                 .FetchAsync<Country>(new CountryCriteria())
                 .ConfigureAwait(false);
 

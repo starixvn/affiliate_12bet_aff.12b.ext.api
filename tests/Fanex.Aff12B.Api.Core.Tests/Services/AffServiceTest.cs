@@ -15,6 +15,7 @@
     {
         private readonly IDynamicRepository _repository;
         private readonly AffService _affService;
+        private bool disposedValue;
 
         // Setup
         public AffServiceTest()
@@ -25,10 +26,11 @@
             _affService = new AffService(_repository);
         }
 
-        // Teardown
         public void Dispose()
         {
-            DateTimeHelper.DateTimeOffsetProvider = () => DateTimeOffset.Now;
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         [Fact]
@@ -132,7 +134,7 @@
                 new (){SiteUrls = "", Country = "", CountryCode = "", TotalClick = 0, UniqueClick = 0, SignUps = 0, Fdm = 0}
             };
 
-            _repository.FetchAsync<Country>(Arg.Any<CountryCriteria>()).Returns(new List<Country> { new() { CountryCode = "Code", CountryName = "Name" } });
+            _repository.FetchAsync<Country>(Arg.Any<CountryCriteria>()).Returns([new() { CountryCode = "Code", CountryName = "Name" }]);
             _repository.FetchAsync<ReferrerStatistics>(Arg.Any<ReferrerStatisticsCriteria>()).Returns(referrerStatistics);
 
             // Action
@@ -163,10 +165,10 @@
 
             var landingPageStatistics = new List<LandingPageStatistics>
             {
-                new() { Page = "", Language = "", LanguageCode = "", Country = "", CountryCode = "" }
+                new() { Page = "", Country = "", CountryCode = "" }
             };
 
-            _repository.FetchAsync<Country>(Arg.Any<CountryCriteria>()).Returns(new List<Country>());
+            _repository.FetchAsync<Country>(Arg.Any<CountryCriteria>()).Returns([]);
             _repository.FetchAsync<LandingPageStatistics>(Arg.Any<LandingPageStatisticsCriteria>()).Returns(landingPageStatistics);
 
             // Action
@@ -188,5 +190,27 @@
             // Assert
             Assert.Empty(result);
         }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~AffServiceTest()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
     }
 }

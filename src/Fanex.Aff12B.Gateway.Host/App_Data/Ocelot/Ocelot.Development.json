@@ -64,7 +64,7 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/api/aff/{action}",
+      "UpstreamPathTemplate": "/api/aff/currentmonth/{action}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/api/aff/{action}",
       "DownstreamScheme": "https",
