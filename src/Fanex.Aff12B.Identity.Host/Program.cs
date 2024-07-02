@@ -6,7 +6,6 @@ var env = builder.Environment;
 // Add config to the container
 builder.Configuration.SetBasePath(env.ContentRootPath);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 builder.Configuration.AddEnvironmentVariables();
 
 builder.WebHost.UseSentry();
@@ -16,7 +15,7 @@ var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
-app.MapGet("/", () => "Hello, Welcome to internal 12B API Authentication!");
+app.MapGet("/", () => $"Hello, Welcome to internal 12B API Authentication!");
 
 // Configure the HTTP request pipeline.
 startup.Configure(app);

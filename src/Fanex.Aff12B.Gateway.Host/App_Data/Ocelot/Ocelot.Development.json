@@ -1,8 +1,8 @@
 {
   "Routes": [
-    //Identity API
+    //Auth API
     {
-      "UpstreamPathTemplate": "/IdentityStatus",
+      "UpstreamPathTemplate": "/12bAuthStatus",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/",
       "DownstreamScheme": "https",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "UpstreamPathTemplate": "/IdentityWhoAmI",
+      "UpstreamPathTemplate": "/12bAuthWhoAmI",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamPathTemplate": "/WhoAmI",
       "DownstreamScheme": "https",

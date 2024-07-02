@@ -41,8 +41,7 @@ namespace Fanex.Aff12B.Gateway.Host
 
             app.UseEndpoints(e =>
             {
-                e.MapGet("/", () => "Hello, Welcome to 12B API Gateway!");
-                e.MapControllers();
+                e.MapDefaultControllerRoute();
             });
 
             await app.UseOcelot();

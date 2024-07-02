@@ -6,7 +6,6 @@ var env = builder.Environment;
 // Add config to the container
 builder.Configuration.SetBasePath(env.ContentRootPath);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
 var envFromSetting = builder.Configuration.GetValue<string>("AppSettings:Environment");
 builder.Configuration.AddJsonFile($"App_Data/Ocelot/Ocelot.{envFromSetting}.json", optional: false, reloadOnChange: true);
@@ -23,6 +22,7 @@ var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
+app.MapGet("/", () => $"Hello, Welcome to 12B API Gateway!");
 
 //Configure the HTTP request pipeline.
 await startup.Configure(app);
