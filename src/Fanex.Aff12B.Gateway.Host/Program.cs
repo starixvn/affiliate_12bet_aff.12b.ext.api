@@ -22,7 +22,7 @@ var startup = new Startup(builder.Configuration);
 startup.ConfigureServices(builder.Services);
 
 var app = builder.Build();
-app.MapGet("/", () => $"Hello, Welcome to 12B API Gateway!");
+app.MapGet("/", () => "Hello, Welcome to 12B API Gateway!");
 
 //Configure the HTTP request pipeline.
 await startup.Configure(app);

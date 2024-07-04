@@ -8,6 +8,8 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Routing;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using NSubstitute;
 
     public class AffFilterAttributeTest
     {
@@ -22,11 +24,11 @@
                 {"SuppotedAffList:3", "3"},
             };
             var configuration = FakeConfigurationRoot(myConfiguration);
-
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
             var actionExecutingContext = FakeActionExecutingContext();
             actionExecutingContext.ActionArguments["affId"] = 1;
 
-            var filter = new AffFilterAttribute(configuration);
+            var filter = new AffFilterAttribute(configuration, logger);
 
             // Action
             filter.OnActionExecuting(actionExecutingContext);
@@ -43,8 +45,8 @@
             var configuration = FakeConfigurationRoot(myConfiguration);
 
             var actionExecutingContext = FakeActionExecutingContext();
-
-            var filter = new AffFilterAttribute(configuration);
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
+            var filter = new AffFilterAttribute(configuration, logger);
 
             // Action
             filter.OnActionExecuting(actionExecutingContext);
@@ -66,11 +68,12 @@
                 {"SuppotedAffList:3", "3"},
             };
             var configuration = FakeConfigurationRoot(myConfiguration);
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
 
             var actionExecutingContext = FakeActionExecutingContext();
             actionExecutingContext.ActionArguments["affId"] = affId;
 
-            var filter = new AffFilterAttribute(configuration);
+            var filter = new AffFilterAttribute(configuration, logger);
 
             // Action
             filter.OnActionExecuting(actionExecutingContext);
