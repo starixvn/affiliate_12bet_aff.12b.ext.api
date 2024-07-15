@@ -6,6 +6,8 @@ var env = builder.Environment;
 // Add config to the container
 builder.Configuration.SetBasePath(env.ContentRootPath);
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+var envFromSetting = builder.Configuration.GetValue<string>("AppSettings:Environment");
+builder.Configuration.AddJsonFile($"App_Data/Users/users.{envFromSetting}.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddEnvironmentVariables();
 
 builder.WebHost.UseSentry();

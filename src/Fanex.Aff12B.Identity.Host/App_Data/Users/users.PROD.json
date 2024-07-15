@@ -1,0 +1,88 @@
+{
+  "Users": [
+    {
+      "Username": "12B_Gateway",
+      "Password": "gzv6hOreq7kk8JZ0NsYuiAiN1RggBlpE/Q5bsnBuNJM=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92039708,92039804,92040990,92041414,92041415,92041439,92041565,92041566,92042016"
+    },
+    {
+      "Username": "12B_Auth",
+      "Password": "E9XbG/I2DaU0uwD6v2yxGlFqSgOAB6WT0wupapyt5m0=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841,92039708,92039804,92040990,92041414,92041415,92041439,92041565,92041566,92042016"
+    },
+    {
+      "Username": "12B_Test",
+      "Password": "3ZXBNkLkDme0G7FjZ8PTa1R130oeITA54Sl7lNEILwM=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841"
+    },
+    {
+      "Username": "12B_AFF12620",
+      "Password": "D/cEUQyhtj4Z3xVy4u5bO9IhjdOMWF6vOiasQL/qHjY=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92039708"
+    },
+    {
+      "Username": "12B_AFF12716 ",
+      "Password": "TPAjzjx5cgPCpLhkB2oWh256MNw4fqvI1fTfMsYVYxg=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92039804"
+    },
+    {
+      "Username": "12B_AFF13902 ",
+      "Password": "joDuY8P0eLI1lZIZWaBhDNhSAPnUL9tbUZKEZ87W+qY=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92040990"
+    },
+    {
+      "Username": "12B_AFF14326 ",
+      "Password": "EEYT6T5RKwYoUOZtTawuOsqGlvS9d+EAdN+/e8FrFvQ=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92041414"
+    },
+    {
+      "Username": "12B_AFF14327 ",
+      "Password": "d3HJccUrXRYZeIE3EcoakzsKpB3aIQ6bRKjCuyrdhuw=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92041415"
+    },
+    {
+      "Username": "12B_AFF14351 ",
+      "Password": "cXra01kO58OMCQjL1XyWl2s8Bs4Cb6vFBLs4EX/QPTg=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92041439"
+    },
+    {
+      "Username": "12B_AFF14477 ",
+      "Password": "TMLbhoxSMwsnjdDaLguPuHVcJR68NQHNHQv9kG9rFm4=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92041565"
+    },
+    {
+      "Username": "12B_AFF14478 ",
+      "Password": "A8mANe4cGOpdJtNJ2FjQL6It7F3tf4FcqKd9emcgpyc=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92041566"
+    },
+    {
+      "Username": "12B_AFF14928 ",
+      "Password": "W27JhTHlngBHTHd2N8EQqFJ4bujPoYABwOMOXcaAxQw=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "92042016"
+    }
+  ]
+}
