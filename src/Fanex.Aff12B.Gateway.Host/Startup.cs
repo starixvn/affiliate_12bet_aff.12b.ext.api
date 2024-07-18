@@ -26,8 +26,9 @@ namespace Fanex.Aff12B.Gateway.Host
             DIRegister(services);
         }
 
-        public async Task Configure(IApplicationBuilder app)
+        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStaticResource(env.IsDevelopment());
             app.Configure(configuration);
 
             app.UseMiddleware<RequestResponseLogging>();

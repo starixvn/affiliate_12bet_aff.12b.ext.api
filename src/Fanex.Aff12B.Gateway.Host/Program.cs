@@ -25,6 +25,6 @@ var app = builder.Build();
 app.MapGet("/", () => "Hello, Welcome to 12B API Gateway!");
 
 //Configure the HTTP request pipeline.
-await startup.Configure(app);
+await startup.Configure(app, app.Environment);
 
 app.Run();
