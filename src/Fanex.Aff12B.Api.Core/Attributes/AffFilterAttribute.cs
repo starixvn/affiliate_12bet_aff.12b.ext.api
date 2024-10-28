@@ -21,16 +21,16 @@
             var accessedAffsByClaim = context.HttpContext.User.Claims.FirstOrDefault(c => c.Type == AccessedAffsClaimType)?.Value.Split(',');
 
             var isNull = affIdQuery is null || suppotedAffList is null || accessedAffsByClaim is null;
-            
+
             if (isNull || !(Array.Exists(suppotedAffList, affId => affId.IsMatch(affIdQuery)) && Array.Exists(accessedAffsByClaim, affId => affId.IsMatch(affIdQuery))))
             {
                 context.Result = new BadRequestObjectResult("The Affiliate is invalid or unsupported!");
 
-                if(!isNull)
+                if (!isNull)
                 {
                     string message = $"The user {context.HttpContext.User.Identity.Name} tried accessing an invalid affiliate (AffId: {affIdQuery})";
                     logger.LogCritical(message);
-                }    
+                }
             }
         }
     }
