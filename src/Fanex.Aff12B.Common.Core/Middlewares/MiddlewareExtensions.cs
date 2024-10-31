@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Fanex.Aff12B.Common.Core.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
@@ -102,7 +103,7 @@ namespace Fanex.Aff12B.Common.Core.Middlewares
                 => cache.Set(BuildKey(key), value, TimeSpan.FromMinutes(30));
 
             private string BuildKey(string key)
-                => $"{key}:{httpContextAccessor.HttpContext?.Connection.RemoteIpAddress.ToString()}";
+                => $"{key}:{httpContextAccessor.HttpContext?.Request.GetClientIP()}";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Aff12B.Api.Core.Helpers
 {
+    using Fanex.Aff12B.Common.Core.Extensions;
     using Fanex.Aff12B.Common.Core.Helpers;
     using Fanex.Aff12B.Common.Core.Utilities;
     using Fanex.Data;
@@ -15,23 +16,10 @@
         public string GenerateMessage(HttpContext context, Exception exception)
         {
             var messageBuilder = ExceptionUtils.GetExceptionMessagerBuilder(exception);
-            AddRequestInfo(context, messageBuilder);
+            messageBuilder.AddRequestInfo(context);
             AddDatabaseInfo(messageBuilder, exception);
 
             return messageBuilder.ToString();
-        }
-
-        private static void AddRequestInfo(HttpContext context, StringBuilder builder)
-        {
-            builder.AppendLine();
-            builder.AppendLine("REQUEST INFO");
-
-            var webInfo = GetRequestInfo(context);
-
-            foreach (var item in webInfo)
-            {
-                builder.AppendLine($"{item.Key}: {item.Value}");
-            }
         }
 
         private static void AddDatabaseInfo(StringBuilder builder, Exception exception)
@@ -87,18 +75,5 @@
                ? parameters.Select(parameter => $"{parameter.Key}={parameter.Value}")
                        .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}")
                : string.Empty;
-
-        private static Dictionary<string, object> GetRequestInfo(HttpContext context)
-        {
-            var request = context.Request;
-
-            return new Dictionary<string, object>
-            {
-                [nameof(request.Host)] = request.Host,
-                [nameof(request.Path)] = request.Path,
-                [nameof(request.Body)] = request.Body,
-                ["Remote IP"] = context.Connection.RemoteIpAddress
-            };
-        }
     }
 }
