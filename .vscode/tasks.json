@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost/Fanex.B2C.Ext.Service.WebHost.csproj",
+                "${workspaceFolder}/src/Fanex.Aff12B.Api.Host/Fanex.Aff12B.Api.Host.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost/Fanex.B2C.Ext.Service.WebHost.csproj",
+                "${workspaceFolder}/src/Fanex.Aff12B.Api.Host/Fanex.Aff12B.Api.Host.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost/Fanex.B2C.Ext.Service.WebHost.csproj"
+                "${workspaceFolder}/src/Fanex.Aff12B.Api.Host/Fanex.Aff12B.Api.Host.csproj"
             ],
             "problemMatcher": "$msCompile"
         },

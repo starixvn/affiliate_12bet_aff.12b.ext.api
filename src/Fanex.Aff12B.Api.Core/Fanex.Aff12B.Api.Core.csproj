@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Fanex.Data" Version="4.2.5.3" />
+    <PackageReference Include="Fanex.Data.Repository" Version="4.2.5.3" />
+    <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.5.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Aff12B.Common.Core\Fanex.Aff12B.Common.Core.csproj" />
+  </ItemGroup>
+
+</Project>

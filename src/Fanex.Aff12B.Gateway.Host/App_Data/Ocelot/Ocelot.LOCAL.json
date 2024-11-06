@@ -1,0 +1,84 @@
+{
+  "Routes": [
+    //Identity API
+    {
+      "UpstreamPathTemplate": "/12bAuthStatus",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Auth_LOCAL",
+          "Port": 5000
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/12bAuthWhoAmI",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/WhoAmI",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Auth_LOCAL",
+          "Port": 5000
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/Api/Auth",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamPathTemplate": "/Api/Auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Auth_LOCAL",
+          "Port": 5000
+        }
+      ]
+    },
+
+    //Internal 12B API
+    {
+      "UpstreamPathTemplate": "/12bApiStatus",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Service_LOCAL",
+          "Port": 5000
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/12bApiWhoami",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/whoami",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Service_LOCAL",
+          "Port": 5000
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/api/aff/currentmonth/{action}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamPathTemplate": "/api/aff/{action}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "12b_Int_Api_Service_LOCAL",
+          "Port": 5000
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+  }
+}

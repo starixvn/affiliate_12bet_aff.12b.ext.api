@@ -1,0 +1,32 @@
+{
+  "Users": [
+    {
+      "Username": "12B_Gateway",
+      "Password": "XQdVaeEwz3VubLyVfizeCI6gdZCx9oBJh3u6GfoRe94=", //1234ext
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841,1271808"
+    },
+    {
+      "Username": "12B_Auth",
+      "Password": "XQdVaeEwz3VubLyVfizeCI6gdZCx9oBJh3u6GfoRe94=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841,1271808"
+    },
+    {
+      "Username": "12B_LOCAL",
+      "Password": "XQdVaeEwz3VubLyVfizeCI6gdZCx9oBJh3u6GfoRe94=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841,1271808"
+    },
+    {
+      "Username": "12B_Test",
+      "Password": "XQdVaeEwz3VubLyVfizeCI6gdZCx9oBJh3u6GfoRe94=",
+      "Role": "",
+      "Scopes": "",
+      "AccessedAffs": "927841,1271808"
+    }
+  ]
+}

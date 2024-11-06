@@ -11,9 +11,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost/bin/Debug/net6.0/Fanex.B2C.Ext.Service.WebHost.dll",
+            "program": "${workspaceFolder}/src/Fanex.Aff12B.Api.Host/bin/Debug/net8.0/Fanex.Aff12B.Api.Host.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost",
+            "cwd": "${workspaceFolder}/src/Fanex.Aff12B.Api.Host",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
@@ -25,7 +25,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/src/Fanex.B2C.Ext.Service.WebHost/Views"
+                "/Views": "${workspaceFolder}/src/Fanex.Aff12B.Api.Host/Views"
             }
         },
         {

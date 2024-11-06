@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions SiteId="32" SiteName="12B_Api">
-  <Function Name="Affiliate_Information">
-    <Setting Key="Aff_User_Overview_Detail_Sel" SpName="Aff_User_Overview_Detail_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
-    <Setting Key="Aff_User_StatementHistory_Sel" SpName="Aff_User_StatementHistory_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
-    <Setting Key="Aff_User_CommSetting_Sel" SpName="Aff_User_CommSetting_Sel" DbName="DBAFF.Affiliate_12Bet.bodbDownlineNetView" />
-  </Function>
-</Functions>

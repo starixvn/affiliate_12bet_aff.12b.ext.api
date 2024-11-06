@@ -1,0 +1,110 @@
+﻿namespace Fanex.Aff12B.Api.Core.Tests.Attributes
+{
+    using Core.Attributes;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Microsoft.AspNetCore.Routing;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using NSubstitute;
+
+    public class AffFilterAttributeTest
+    {
+        [Fact]
+        public void OnActionExecuting_ValidAccess_ResultIsNull()
+        {
+            // Arrange
+            var myConfiguration = new Dictionary<string, string>
+            {
+                {"SuppotedAffList:0", "1"},
+                {"SuppotedAffList:1", "2"},
+                {"SuppotedAffList:3", "3"},
+            };
+            var configuration = FakeConfigurationRoot(myConfiguration);
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
+            var actionExecutingContext = FakeActionExecutingContext();
+            actionExecutingContext.ActionArguments["affId"] = 1;
+
+            var filter = new AffFilterAttribute(configuration, logger);
+
+            // Action
+            filter.OnActionExecuting(actionExecutingContext);
+
+            // Assert
+            Assert.Null(actionExecutingContext.Result);
+        }
+
+        [Fact]
+        public void OnActionExecuting_WhenSuppotedAffListEmpty_ResultIsNull()
+        {
+            // Arrange
+            var myConfiguration = new Dictionary<string, string>();
+            var configuration = FakeConfigurationRoot(myConfiguration);
+
+            var actionExecutingContext = FakeActionExecutingContext();
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
+            var filter = new AffFilterAttribute(configuration, logger);
+
+            // Action
+            filter.OnActionExecuting(actionExecutingContext);
+
+            // Assert
+            Assert.Null(actionExecutingContext.Result);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        [InlineData(null)]
+        public void OnActionExecuting_InvalidParam_ReturnBadRequest(int? affId)
+        {
+            // Arrange
+            var myConfiguration = new Dictionary<string, string>
+            {
+                {"SuppotedAffList:0", "1"},
+                {"SuppotedAffList:1", "2"},
+                {"SuppotedAffList:3", "3"},
+            };
+            var configuration = FakeConfigurationRoot(myConfiguration);
+            var logger = Substitute.For<ILogger<AffFilterAttribute>>();
+
+            var actionExecutingContext = FakeActionExecutingContext();
+            actionExecutingContext.ActionArguments["affId"] = affId;
+
+            var filter = new AffFilterAttribute(configuration, logger);
+
+            // Action
+            filter.OnActionExecuting(actionExecutingContext);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(actionExecutingContext.Result);
+            var result = actionExecutingContext.Result as BadRequestObjectResult;
+            Assert.Equal("The Affiliate is invalid or unsupport!", result?.Value);
+        }
+
+        private static IConfigurationRoot FakeConfigurationRoot(Dictionary<string, string> dic)
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(dic!)
+                .Build();
+
+            return configuration;
+        }
+
+        private static ActionExecutingContext FakeActionExecutingContext()
+        {
+            var httpContext = new DefaultHttpContext();
+
+            var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor(), new ModelStateDictionary());
+
+            var actionExecutingContext = new ActionExecutingContext(actionContext,
+                new List<IFilterMetadata>(),
+                new Dictionary<string, object>(),
+                controller: null!);
+
+            return actionExecutingContext;
+        }
+    }
+}
