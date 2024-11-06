@@ -53,7 +53,7 @@ namespace Fanex.Aff12B.Common.Core.Tests.Middlewares
             var mockHeader = Substitute.For<IHeaderDictionary>();
 
             mockHeader.ContainsKey("Authorization").Returns(true);
-            mockHeader["Authorization"].Returns(StringValues.Empty);
+            mockHeader.Authorization.Returns(StringValues.Empty);
             _mockRequest.Headers.Returns(mockHeader);
             _mockRequest.Query.Returns(_mockQueryCollection);
 
