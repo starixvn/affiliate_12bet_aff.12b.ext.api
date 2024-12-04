@@ -79,13 +79,6 @@ namespace Fanex.Aff12B.Common.Core.Extensions
                 .AddCheck<WhoAmIHealthCheck>("WhoAmIHealthCheck");
 
             services.AddHttpContextAccessor();
-            services.AddHttpsRedirection(options =>
-            {
-                const int httpsPort = 443;
-                options.HttpsPort = httpsPort;
-            });
-
-            services.AddUnderMaintenance(configuration);
         }
 
         public static void Configure(this IApplicationBuilder app, IConfiguration configuration)
@@ -115,7 +108,6 @@ namespace Fanex.Aff12B.Common.Core.Extensions
             }
 
             app.UseWhoAmICheck();
-            app.UseUnderMaintenance();
         }
     }
 }

@@ -21,6 +21,14 @@ namespace Fanex.Aff12B.Gateway.Host
 
             services.ConfigureServices(configuration, "Aff12B.Gateway", true);
 
+            services.AddHttpsRedirection(options =>
+            {
+                const int httpsPort = 443;
+                options.HttpsPort = httpsPort;
+            });
+
+            services.AddUnderMaintenance(configuration);
+
             services.AddOcelot(configuration).AddDelegatingHandler<ApiKeyHandler>(true);
 
             DIRegister(services);
@@ -30,6 +38,7 @@ namespace Fanex.Aff12B.Gateway.Host
         {
             app.UseStaticResource(env.IsDevelopment());
             app.Configure(configuration);
+            app.UseUnderMaintenance();
 
             app.UseMiddleware<RequestResponseLogging>();
 
